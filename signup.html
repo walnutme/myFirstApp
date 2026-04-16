@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - My App</title>
+    <meta name="description" content="My App 회원가입 페이지입니다.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="signup-page">
+    <div class="container">
+        <div class="glass-card">
+            <h2>Create Account</h2>
+            <p class="subtitle">새로운 계정을 만들어보세요</p>
+            <form onsubmit="handleSignup(event)">
+                <div class="input-group">
+                    <input type="text" id="username" required>
+                    <label for="username">이름 (Username)</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" required>
+                    <label for="email">이메일 (Email)</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required>
+                    <label for="password">비밀번호 (Password)</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="confirm_password" required>
+                    <label for="confirm_password">비밀번호 확인 (Confirm)</label>
+                </div>
+                <button type="submit" class="btn">회원가입</button>
+            </form>
+            <p class="footer-text">이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

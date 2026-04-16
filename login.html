@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - My App</title>
+    <meta name="description" content="My App 로그인 페이지입니다.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="container">
+        <div class="glass-card">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">계정에 로그인하세요</p>
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <input type="email" id="email" required>
+                    <label for="email">이메일 (Email)</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" required>
+                    <label for="password">비밀번호 (Password)</label>
+                </div>
+                <div class="options">
+                    <label class="remember">
+                        <input type="checkbox"> 로그인 유지
+                    </label>
+                    <a href="#" class="forgot">비밀번호 찾기</a>
+                </div>
+                <button type="submit" class="btn">로그인</button>
+            </form>
+            <p class="footer-text">계정이 없으신가요? <a href="signup.html">회원가입</a></p>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
