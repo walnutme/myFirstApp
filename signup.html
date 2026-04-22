@@ -30,11 +30,69 @@
                     <input type="password" id="confirm_password" required>
                     <label for="confirm_password">비밀번호 확인 (Confirm)</label>
                 </div>
+                <div class="input-group">
+                    <div class="custom-select-wrapper" id="city-wrapper">
+                        <div class="custom-select-trigger" id="city-trigger">거주 도시 선택 (City)</div>
+                        <div class="custom-options">
+                            <div class="optgroup-label">특별시/광역시/특별자치시</div>
+                            <div class="custom-option" data-value="서울">서울</div><div class="custom-option" data-value="부산">부산</div><div class="custom-option" data-value="인천">인천</div><div class="custom-option" data-value="대구">대구</div><div class="custom-option" data-value="대전">대전</div><div class="custom-option" data-value="광주">광주</div><div class="custom-option" data-value="울산">울산</div><div class="custom-option" data-value="세종">세종</div>
+                            
+                            <div class="optgroup-label">경기도</div>
+                            <div class="custom-option" data-value="수원">수원</div><div class="custom-option" data-value="성남">성남</div><div class="custom-option" data-value="고양">고양</div><div class="custom-option" data-value="용인">용인</div><div class="custom-option" data-value="부천">부천</div><div class="custom-option" data-value="안산">안산</div><div class="custom-option" data-value="안양">안양</div><div class="custom-option" data-value="남양주">남양주</div><div class="custom-option" data-value="화성">화성</div><div class="custom-option" data-value="평택">평택</div><div class="custom-option" data-value="의정부">의정부</div><div class="custom-option" data-value="시흥">시흥</div><div class="custom-option" data-value="파주">파주</div><div class="custom-option" data-value="광명">광명</div><div class="custom-option" data-value="김포">김포</div><div class="custom-option" data-value="군포">군포</div><div class="custom-option" data-value="광주(경기)">광주(경기)</div><div class="custom-option" data-value="이천">이천</div><div class="custom-option" data-value="양주">양주</div><div class="custom-option" data-value="오산">오산</div><div class="custom-option" data-value="구리">구리</div><div class="custom-option" data-value="안성">안성</div><div class="custom-option" data-value="포천">포천</div><div class="custom-option" data-value="의왕">의왕</div><div class="custom-option" data-value="하남">하남</div><div class="custom-option" data-value="여주">여주</div><div class="custom-option" data-value="동두천">동두천</div><div class="custom-option" data-value="과천">과천</div>
+                            
+                            <div class="optgroup-label">강원도</div>
+                            <div class="custom-option" data-value="춘천">춘천</div><div class="custom-option" data-value="원주">원주</div><div class="custom-option" data-value="강릉">강릉</div><div class="custom-option" data-value="동해">동해</div><div class="custom-option" data-value="태백">태백</div><div class="custom-option" data-value="속초">속초</div><div class="custom-option" data-value="삼척">삼척</div>
+                            
+                            <div class="optgroup-label">충청북도</div>
+                            <div class="custom-option" data-value="청주">청주</div><div class="custom-option" data-value="충주">충주</div><div class="custom-option" data-value="제천">제천</div>
+                            
+                            <div class="optgroup-label">충청남도</div>
+                            <div class="custom-option" data-value="천안">천안</div><div class="custom-option" data-value="공주">공주</div><div class="custom-option" data-value="보령">보령</div><div class="custom-option" data-value="아산">아산</div><div class="custom-option" data-value="서산">서산</div><div class="custom-option" data-value="논산">논산</div><div class="custom-option" data-value="계룡">계룡</div><div class="custom-option" data-value="당진">당진</div>
+                            
+                            <div class="optgroup-label">전라북도</div>
+                            <div class="custom-option" data-value="전주">전주</div><div class="custom-option" data-value="군산">군산</div><div class="custom-option" data-value="익산">익산</div><div class="custom-option" data-value="정읍">정읍</div><div class="custom-option" data-value="남원">남원</div><div class="custom-option" data-value="김제">김제</div>
+                            
+                            <div class="optgroup-label">전라남도</div>
+                            <div class="custom-option" data-value="목포">목포</div><div class="custom-option" data-value="여수">여수</div><div class="custom-option" data-value="순천">순천</div><div class="custom-option" data-value="나주">나주</div><div class="custom-option" data-value="광양">광양</div>
+                            
+                            <div class="optgroup-label">경상북도</div>
+                            <div class="custom-option" data-value="포항">포항</div><div class="custom-option" data-value="경주">경주</div><div class="custom-option" data-value="김천">김천</div><div class="custom-option" data-value="안동">안동</div><div class="custom-option" data-value="구미">구미</div><div class="custom-option" data-value="영주">영주</div><div class="custom-option" data-value="영천">영천</div><div class="custom-option" data-value="상주">상주</div><div class="custom-option" data-value="문경">문경</div><div class="custom-option" data-value="경산">경산</div>
+                            
+                            <div class="optgroup-label">경상남도</div>
+                            <div class="custom-option" data-value="창원">창원</div><div class="custom-option" data-value="진주">진주</div><div class="custom-option" data-value="통영">통영</div><div class="custom-option" data-value="사천">사천</div><div class="custom-option" data-value="김해">김해</div><div class="custom-option" data-value="밀양">밀양</div><div class="custom-option" data-value="거제">거제</div><div class="custom-option" data-value="양산">양산</div>
+                            
+                            <div class="optgroup-label">제주도</div>
+                            <div class="custom-option" data-value="제주">제주</div><div class="custom-option" data-value="서귀포">서귀포</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="city" value="">
+                </div>
                 <button type="submit" class="btn">회원가입</button>
             </form>
             <p class="footer-text">이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
         </div>
     </div>
     <script src="index.js"></script>
+    <script>
+        document.getElementById('city-trigger').addEventListener('click', function() {
+            document.getElementById('city-wrapper').classList.toggle('open');
+        });
+
+        document.querySelectorAll('.custom-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const value = this.getAttribute('data-value');
+                document.getElementById('city-trigger').textContent = this.textContent;
+                document.getElementById('city').value = value;
+                document.getElementById('city-wrapper').classList.remove('open');
+            });
+        });
+
+        // Close when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!document.getElementById('city-wrapper').contains(e.target)) {
+                document.getElementById('city-wrapper').classList.remove('open');
+            }
+        });
+    </script>
 </body>
 </html>

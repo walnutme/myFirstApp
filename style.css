@@ -12,6 +12,7 @@ body {
     align-items: center;
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
+    transition: background 0.7s ease, color 0.7s ease;
 }
 
 body.login-page {
@@ -178,4 +179,159 @@ h2 {
 
 .footer-text a:hover {
     text-decoration: underline;
+}
+
+/* Weather dashboard specific styles */
+body.weather-sunny {
+    background: linear-gradient(135deg, #FFB75E 0%, #ED8F03 100%);
+}
+body.weather-rainy {
+    background: linear-gradient(135deg, #283048 0%, #859398 100%);
+}
+body.weather-cloudy {
+    background: linear-gradient(135deg, #5D4157 0%, #A8CABA 100%);
+}
+body.weather-snowy {
+    background: linear-gradient(135deg, #757F9A 0%, #D7DDE8 100%);
+}
+
+/* --- Removed native select styles, using custom div select --- */
+
+/* Custom Select Container */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+.custom-select-trigger {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.custom-select-trigger::after {
+    content: "▼";
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+.custom-select-wrapper.open .custom-select-trigger {
+    border-bottom-color: #fff;
+    color: #fff;
+}
+.custom-select-wrapper.open .custom-select-trigger::after {
+    content: "▲";
+}
+
+/* Dropdown Window */
+.custom-options {
+    position: absolute;
+    top: 100%; /* Forces dropdown to open directly downwards */
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 0 0 10px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: none;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+    text-align: left;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+.custom-select-wrapper.open .custom-options {
+    display: block;
+}
+
+/* Dropdown Items */
+.optgroup-label {
+    padding: 8px 15px;
+    color: #4ecdc4;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: rgba(20, 20, 20, 0.95);
+}
+.custom-option {
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 0.95rem;
+}
+.custom-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Scrollbar for Dropdown */
+.custom-options::-webkit-scrollbar {
+    width: 8px;
+}
+.custom-options::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 10px 0;
+}
+.custom-options::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+}
+.custom-options::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+#mask-icon-container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: float 3s ease-in-out infinite;
+    z-index: 100;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Dashboard Nav Arrows */
+.nav-arrow {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin: 10px auto;
+}
+.nav-arrow:hover:not(:disabled) {
+    background: rgba(255,255,255,0.4);
+    transform: scale(1.1);
+}
+.nav-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
 }

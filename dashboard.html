@@ -3,36 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대시보드 - My App</title>
-    <meta name="description" content="My App 대시보드 페이지입니다.">
+    <title>날씨 대시보드 - My App</title>
+    <meta name="description" content="My App 날씨 대시보드 페이지입니다.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
 </head>
-<body class="home-page">
-    <div class="container">
-        <div class="glass-card">
-            <h2 id="welcome-message">환영합니다!</h2>
-            <p class="subtitle">성공적으로 로그인 하셨습니다.</p>
+<body id="dashboard-body" class="weather-sunny">
+    
+    <!-- Floating background weather emoji to the side -->
+    <div id="bg-weather-icon" style="position:fixed; top:50%; right: 10%; transform:translateY(-50%); font-size: 35vh; opacity:0.6; pointer-events:none; z-index:0; line-height: 1; filter: drop-shadow(0 0 30px rgba(255,255,255,0.4)); animation: float 6s ease-in-out infinite; text-align: center;"></div>
+    
+    <div class="container" style="position:relative; z-index:1;">
+        <div class="glass-card" style="text-align: center; position: relative;">
             
-            <div class="options" style="justify-content: center; margin-top: 40px;">
-                <button onclick="handleLogout()" class="btn" style="width: auto; padding: 10px 30px;">로그아웃</button>
+            <button id="btn-prev" onclick="changeDate(-1)" class="nav-arrow" title="전 날로 이동">▲</button>
+            
+            <div class="walk-header" style="text-align: center; margin: 15px 0 25px 0; display:flex; flex-direction:column; align-items:center;">
+                <div style="font-family: 'Gowun Dodum', 'Jua', sans-serif; font-size: 3.2rem; font-weight: bold; position: relative; margin-bottom: 10px; line-height: 1.2; white-space: nowrap;">
+                    <span id="walk-text">산책 일지</span>
+                    
+                    <!-- Drawn red pencil cross mark with thick texture strokes -->
+                    <svg id="red-cross" style="display:none; position:absolute; top: -5%; left: -5%; width: 110%; height: 110%; pointer-events:none; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.4));" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <!-- Cross / -->
+                        <path d="M 5,95 Q 45,50 95,5 M 95,5 Q 50,45 10,90" stroke="#ff4757" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.85"/>
+                        <path d="M 12,98 Q 50,55 90,10" stroke="#ff6b81" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9"/>
+                        <!-- Cross \ -->
+                        <path d="M 5,5 Q 50,50 95,95 M 95,95 Q 50,55 10,10" stroke="#ff4757" stroke-width="5" stroke-linecap="round" fill="none" opacity="0.85"/>
+                        <path d="M 12,2 Q 55,50 90,90" stroke="#ff6b81" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9"/>
+                    </svg>
+                </div>
+
+                <img id="poodle-img" src="smiling_poodle.png" alt="푸들 얼굴" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 8px 25px rgba(0,0,0,0.4); border: 5px solid rgba(255,255,255,0.7); background: white;">
+            </div>
+            
+            <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: nowrap; white-space: nowrap;">
+                <h3 id="date-display" style="font-size: 1.1rem; font-weight: bold; margin: 0;"></h3>
+                <label id="walk-check-label" style="display:inline-flex; align-items:center; cursor:pointer; background:rgba(255,255,255,0.2); padding: 4px 10px; border-radius:20px; font-size:0.85rem; font-weight:bold; transition:all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid transparent;">
+                    <input type="checkbox" id="walk-check" onchange="toggleWalk(this.checked)" style="display:none;">
+                    <span id="walk-check-icon" style="margin-right:4px;">🔲</span>
+                    <span id="walk-check-text">산책 전</span>
+                </label>
+            </div>
+            <p class="subtitle" id="city-info" style="margin-bottom: 20px; opacity: 0.9;"></p>
+            
+            <div class="weather-info">
+                <p id="weather-desc" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 10px;"></p>
+                
+                <div id="dust-info" style="font-size: 0.95rem; margin-top: 15px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; text-align: left; display: inline-block; width: 100%;">
+                    <p id="misae-desc" style="margin-bottom: 8px;"></p>
+                    <p id="chomisae-desc" style="margin-bottom: 8px;"></p>
+                    <p id="hwangsa-desc"></p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 10px;">
+                <button id="btn-next" onclick="changeDate(1)" class="nav-arrow" title="다음 날로 이동">▼</button>
+            </div>
+
+            <div class="options" style="justify-content: center; margin-top: 15px;">
+                <button onclick="handleLogout()" class="btn" style="width: auto; padding: 8px 25px;">로그아웃</button>
             </div>
         </div>
     </div>
 
     <script src="index.js"></script>
     <script>
-        // 페이지 로드 시 사용자 이름 표시
-        window.onload = function() {
+        let currentDateOffset = 0; 
+        let minDays = 0;
+        let maxDays = 6;
+        let selectedCity = "";
+        let weatherDataCache = null;
+        let walkLogs = JSON.parse(localStorage.getItem('walkLogs')) || {};
+
+        function getSeoulDateString(offset) {
+            const date = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+            date.setDate(date.getDate() + offset);
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
+
+        async function fetchCoordinates(city) {
+            try {
+                const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ko&format=json`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data.results && data.results.length > 0) {
+                    return { lat: data.results[0].latitude, lon: data.results[0].longitude };
+                }
+            } catch (e) {
+                console.error("Geocoding failed:", e);
+            }
+            return { lat: 37.5665, lon: 126.9780 }; // Fallback Seoul
+        }
+
+        async function fetchWeather(lat, lon) {
+            // Added past_days=7 to query past week
+            const wUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code&timezone=Asia%2FSeoul&past_days=7`;
+            const wRes = await fetch(wUrl);
+            const wData = await wRes.json();
+            
+            const aUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&hourly=pm10,pm2_5,dust&timezone=Asia%2FSeoul&past_days=7`;
+            const aRes = await fetch(aUrl);
+            const aData = await aRes.json();
+            
+            return { weather: wData, aqi: aData };
+        }
+
+        function mapWMOCode(code) {
+            if ([0].includes(code)) return 'sunny';
+            if ([1,2,3,45,48].includes(code)) return 'cloudy';
+            if ([51,53,55,56,57,61,63,65,66,67,80,81,82,95,96,99].includes(code)) return 'rainy';
+            if ([71,73,75,77,85,86].includes(code)) return 'snowy';
+            return 'sunny';
+        }
+
+        function getWeatherData(dateOffset) {
+            if (!weatherDataCache) return null;
+            
+            const wIcon = { 'sunny': '☀️', 'rainy': '🌧️', 'cloudy': '☁️', 'snowy': '❄️' };
+            const wDesc = { 'sunny': '화창함', 'rainy': '비가 옴', 'cloudy': '흐림', 'snowy': '눈이 내림' };
+            
+            const targetDateStr = getSeoulDateString(dateOffset);
+            
+            // Find index matching the target string
+            const dayIndex = weatherDataCache.weather.daily.time.indexOf(targetDateStr);
+            if (dayIndex === -1) return null; // Date not found
+
+            const code = weatherDataCache.weather.daily.weather_code[dayIndex];
+            const type = mapWMOCode(code);
+            
+            // Approximate AQI at noon (12:00) of that day
+            const targetHourStr = `${targetDateStr}T12:00`;
+            const hourIndex = weatherDataCache.aqi.hourly.time.indexOf(targetHourStr);
+            
+            let misae = 0, choMisae = 0, dustVal = 0;
+            if (hourIndex !== -1) {
+                misae = weatherDataCache.aqi.hourly.pm10[hourIndex] || 0;
+                choMisae = weatherDataCache.aqi.hourly.pm2_5[hourIndex] || 0;
+                dustVal = weatherDataCache.aqi.hourly.dust[hourIndex] || 0;
+            }
+            
+            let hwangsa = (dustVal > 100);
+            
+            const date = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Seoul"}));
+            date.setDate(date.getDate() + dateOffset);
+            
+            const weekdayStr = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()];
+            const shortDateStr = `${date.getMonth() + 1}/${date.getDate()} (${weekdayStr})`;
+            
+            return {
+                date: shortDateStr,
+                type: type,
+                icon: wIcon[type],
+                desc: wDesc[type],
+                misae: Math.round(misae),
+                choMisae: Math.round(choMisae),
+                hwangsa: hwangsa
+            };
+        }
+
+        function toggleWalk(isChecked) {
+            const data = getWeatherData(currentDateOffset);
+            const isBadWeather = data ? (data.type === 'rainy' || data.type === 'snowy' || data.hwangsa || data.choMisae > 40 || data.misae > 60) : false;
+            
+            if (isBadWeather) return; // Prevent logging walk if weather is bad
+            
+            const targetDateStr = getSeoulDateString(currentDateOffset);
+            walkLogs[targetDateStr] = isChecked;
+            localStorage.setItem('walkLogs', JSON.stringify(walkLogs));
+            updateWalkCheckUI(isChecked, isBadWeather);
+        }
+
+        function updateWalkCheckUI(isChecked, isBadWeather) {
+            const checkInput = document.getElementById("walk-check");
+            const icon = document.getElementById("walk-check-icon");
+            const text = document.getElementById("walk-check-text");
+            const label = document.getElementById("walk-check-label");
+            
+            checkInput.checked = isChecked;
+            
+            if (isBadWeather) {
+                checkInput.disabled = true;
+                label.style.pointerEvents = "none";
+                label.style.opacity = "0.8";
+                icon.innerText = "⛔";
+                text.innerText = "산책 불가 (날씨 나쁨)";
+                label.style.background = "rgba(255, 107, 129, 0.3)";
+                label.style.border = "2px solid #ff6b81";
+            } else {
+                checkInput.disabled = false;
+                label.style.pointerEvents = "auto";
+                label.style.opacity = "1";
+                
+                if (isChecked) {
+                    icon.innerText = "🐾";
+                    text.innerText = "산책 완료!";
+                    label.style.background = "rgba(78, 205, 196, 0.4)";
+                    label.style.border = "2px solid #4ecdc4";
+                } else {
+                    icon.innerText = "🔲";
+                    text.innerText = "산책 전";
+                    label.style.background = "rgba(255, 255, 255, 0.2)";
+                    label.style.border = "2px solid transparent";
+                }
+            }
+        }
+
+        function updateWeatherUI() {
+            const data = getWeatherData(currentDateOffset);
+            if (!data) return;
+            
+            let dayLabel = "";
+            if(currentDateOffset === 0) dayLabel = "오늘 (" + data.date + ")";
+            else if(currentDateOffset === 1) dayLabel = "내일 (" + data.date + ")";
+            else if(currentDateOffset === -1) dayLabel = "어제 (" + data.date + ")";
+            else if(currentDateOffset < 0) dayLabel = Math.abs(currentDateOffset) + "일 전 (" + data.date + ")";
+            else dayLabel = currentDateOffset + "일 후 (" + data.date + ")";
+            
+            document.getElementById("date-display").innerText = dayLabel;
+            
+            document.getElementById("bg-weather-icon").innerText = data.icon;
+            document.getElementById("weather-desc").innerText = "날씨: " + data.desc;
+            
+            const body = document.getElementById("dashboard-body");
+            body.className = "weather-" + data.type;
+            
+            const misaeElem = document.getElementById("misae-desc");
+            const choElem = document.getElementById("chomisae-desc");
+            const hwangsaElem = document.getElementById("hwangsa-desc");
+
+            misaeElem.innerHTML = `미세먼지: <strong>${data.misae}</strong> ㎍/㎥`;
+            choElem.innerHTML = `초미세먼지: <strong>${data.choMisae}</strong> ㎍/㎥`;
+            hwangsaElem.innerHTML = `황사: <strong>${data.hwangsa ? "발생 😷" : "없음 😊"}</strong>`;
+
+            if (data.misae > 60) misaeElem.style.color = "#ff6b6b"; else misaeElem.style.color = "#4ecdc4";
+            if (data.choMisae > 40) choElem.style.color = "#ff6b6b"; else choElem.style.color = "#4ecdc4";
+
+            const isBadWeather = (data.type === 'rainy' || data.type === 'snowy' || data.hwangsa || data.choMisae > 40 || data.misae > 60);
+            
+            const poodleImg = document.getElementById("poodle-img");
+            const redCross = document.getElementById("red-cross");
+            
+            if (isBadWeather) {
+                poodleImg.src = "crying_poodle.png";
+                redCross.style.display = "block";
+            } else {
+                poodleImg.src = "smiling_poodle.png";
+                redCross.style.display = "none";
+            }
+
+            document.getElementById("btn-prev").disabled = (currentDateOffset <= minDays);
+            document.getElementById("btn-next").disabled = (currentDateOffset >= maxDays);
+
+            const targetDateStr = getSeoulDateString(currentDateOffset);
+            const isWalked = walkLogs[targetDateStr] || false;
+            updateWalkCheckUI(isWalked, isBadWeather);
+        }
+
+        function changeDate(dir) {
+            if (dir === 1 && currentDateOffset < maxDays) {
+                currentDateOffset++;
+                updateWeatherUI();
+            } else if (dir === -1 && currentDateOffset > minDays) {
+                currentDateOffset--;
+                updateWeatherUI();
+            }
+        }
+
+        window.onload = async function() {
             const storedUserStr = localStorage.getItem("user");
             if (storedUserStr) {
                 const storedUser = JSON.parse(storedUserStr);
-                document.getElementById("welcome-message").innerText = storedUser.username + "님, 환영합니다!";
+                selectedCity = storedUser.city || "Seoul"; 
+                const cityMap = { 'Seoul': '서울', 'Busan': '부산', 'Incheon': '인천', 'Daegu': '대구', 'Daejeon': '대전', 'Gwangju': '광주', 'Ulsan': '울산', 'Jeju': '제주' };
+                const cityName = cityMap[selectedCity] || selectedCity;
+
+                document.getElementById("city-info").innerText = "📍 " + cityName + " (날씨 불러오는 중...)";
+                
+                try {
+                    const coords = await fetchCoordinates(cityName);
+                    weatherDataCache = await fetchWeather(coords.lat, coords.lon);
+                    
+                    if (weatherDataCache.weather.daily && weatherDataCache.weather.daily.time) {
+                        const todayStr = getSeoulDateString(0);
+                        const todayIndex = weatherDataCache.weather.daily.time.indexOf(todayStr);
+                        if (todayIndex !== -1) {
+                            minDays = -todayIndex;
+                            maxDays = weatherDataCache.weather.daily.time.length - 1 - todayIndex;
+                        }
+                    }
+                    
+                    document.getElementById("city-info").innerText = "📍 " + cityName;
+                    updateWeatherUI();
+                } catch(e) {
+                    document.getElementById("city-info").innerText = "📍 " + cityName + " (날씨 정보를 불러오지 못했습니다.)";
+                    console.error(e);
+                }
             } else {
-                // 로그인되지 않은 상태면 로그인 페이지로
                 window.location.href = "login.html";
             }
-        }
+        };
     </script>
 </body>
 </html>

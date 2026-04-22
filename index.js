@@ -14,6 +14,7 @@ function handleSignup(event) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirm_password").value;
+    const city = document.getElementById("city").value;
 
     // (선택) 비밀번호 일치 확인
     if (password !== confirmPassword) {
@@ -21,11 +22,17 @@ function handleSignup(event) {
         return;
     }
 
+    if (!city) {
+        alert("거주 도시를 선택해주세요.");
+        return;
+    }
+
     // 사용자 객체 생성
     const user = {
         username: username,
         email: email,
-        password: password
+        password: password,
+        city: city
     };
 
     // 객체를 JSON 문자열로 변환하여 LocalStorage에 한 번에 저장
